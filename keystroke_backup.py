@@ -3,7 +3,7 @@ from pynput import keyboard
 from datetime import datetime
 
 keylog = []
-words = []
+words = {}
 current_word = ''
 prev_word = ''
 line_position = 0
@@ -32,9 +32,20 @@ def on_press(key):
             keylog.append(' ')
             # print(' ')
 
-            words.append(current_word)
+            if prev_word not in words:
+                words[prev_word] = [current_word, '', '']
+            else:
+                words[prev_word].insert(0, current_word)
+                words[prev_word].pop()
+
             print('Current word: ' + current_word)
             print('Word pair: ' + prev_word + ' ' + current_word)
+
+            if current_word in words:
+                print('Current pairings: ' + str(words[current_word]))
+            else:
+                print('No current pairings.')
+
             prev_word = current_word
             current_word = ''
         else:
