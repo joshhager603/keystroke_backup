@@ -25,9 +25,9 @@ def suggest():
     global words
 
     if current_word in words:
-        print('Suggestions: ' + str(words[current_word]), end='\r')
+        print('\033[1A\033[KSuggestions: ' + str(words[current_word]))
     else:
-        print('No current suggestions.', end='\r')
+        print('\033[1A\033[KNo current suggestions.')
 
 
 def on_release(key):
